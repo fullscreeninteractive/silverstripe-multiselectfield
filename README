@@ -1,27 +1,66 @@
-MultiSelectField 
-----------------
+# MultiSelectField 
 
-A field primarily for managing has_many and many_many relationships, but should
-also work with Varchar fields.
+```
+This is a fork of the http://svn.gpmd.net/svn/open/multiselectfield/tags/0.2/ 
+which has been updated for 3.1. 
+```
 
-Presents an interface composed of two listboxes with add/remove buttons to move
-items from one box to the other. Sometimes refered to as an "options transfer"
-field.
+## Maintainer Contact
 
-Code has now been rewritten to make it more portable:
+ * Will Rossiter (Nickname: wilr) <will@fullscreen.io>
 
-- Extends standard SilverStripe CheckboxSetField and inherits it's constructor
-- Degrades to a standard <select multiple="multiple"> field without javascript
+## Requirements
 
-Example use:
+* SilverStripe 3.1
 
-  static $many_many = array ('ThingPages'=>'ThingPage');
+## Overview
 
-  $source = DataObject::get('ThingPages);
-  new MultiSelectField(
-    "ThingPages", // Relationship
-    "Related Thing Pages", // Field name
-    $source->map('ID','Title') // Source records (array)
-  )
+https://www.evernote.com/shard/s6/sh/ab40de01-9635-448c-93c7-96432e6d2ebb/0e58dd01a55a201fec50919f5f07d632
 
+A FormField for users to select and remove multiple items to a record. Similar 
+to CheckboxSetField this handles both adding and removing entries backed by 
+relations (has_many, many_many) and saving text strings as comma separated list.
 
+## Installation
+	
+```
+composer require "fullscreeninteractive/silverstripe-multiselectfield:dev-master"
+```
+
+## Usage Overview
+
+### Relation
+
+```
+private static $many_many = array (
+	'Departments' => 'Department'
+);
+
+..
+
+$fields->push(new MultiSelectField(
+    "Departments",
+    "Departments",
+    Departments::get()->map('ID','Title')
+));
+```
+
+### Comma separated list
+
+```
+private static $db = array (
+	'Departments' => 'Text'
+);
+
+..
+
+$fields->push(new MultiSelectField(
+    "Departments",
+    "Departments",
+    array(
+    	'Design',
+    	'Development',
+    	'HR'
+    )
+));
+```
