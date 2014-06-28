@@ -1,0 +1,27 @@
+MultiSelectField 
+----------------
+
+A field primarily for managing has_many and many_many relationships, but should
+also work with Varchar fields.
+
+Presents an interface composed of two listboxes with add/remove buttons to move
+items from one box to the other. Sometimes refered to as an "options transfer"
+field.
+
+Code has now been rewritten to make it more portable:
+
+- Extends standard SilverStripe CheckboxSetField and inherits it's constructor
+- Degrades to a standard <select multiple="multiple"> field without javascript
+
+Example use:
+
+  static $many_many = array ('ThingPages'=>'ThingPage');
+
+  $source = DataObject::get('ThingPages);
+  new MultiSelectField(
+    "ThingPages", // Relationship
+    "Related Thing Pages", // Field name
+    $source->map('ID','Title') // Source records (array)
+  )
+
+
