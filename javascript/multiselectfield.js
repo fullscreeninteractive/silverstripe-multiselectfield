@@ -1,15 +1,15 @@
 (function($){
 
     // Initialise multiselect field
-    multiSelectFieldInitialise = function(){
+    multiSelectFieldInitialise = function() {
         var multiSelectField = $(this);
         var sourceField = $('select', multiSelectField);
         
         // Add source, destination and control fields
         sourceField.addClass('hidden');
-        sourceField.before('<select class="multiselect-unselected" multiple="multiple"></select>');
+        sourceField.before('<select class="multiselect-unselected no-chzn" multiple="multiple"></select>');
         sourceField.before('<div class="multiselect-controls"><p><button class="action multiselect-add">Add &gt;</button></p><p><button class="action multiselect-remove">&lt; Remove</button></p></div>');
-        sourceField.before('<select class="multiselect-selected" multiple="multiple"></select>');
+        sourceField.before('<select class="multiselect-selected no-chzn" multiple="multiple"></select>');
         
         // Move unselected items to source copy selected items to dest
         var selectedField = $('.multiselect-selected', multiSelectField);
@@ -33,7 +33,7 @@
             return false;
         });
     }
-    
+
     if (typeof $(document).livequery != 'undefined') {
         $('.multiselect').livequery(multiSelectFieldInitialise);
     }
