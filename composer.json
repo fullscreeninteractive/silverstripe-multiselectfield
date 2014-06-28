@@ -1,0 +1,17 @@
+{
+    "name": "fullscreeninteractive/silverstripe-multiselectfield",
+    "description": "A FormField for users to select and remove multiple items to a record",
+    "type": "silverstripe-module",
+    "keywords": ["silverstripe", "formfield", "multiselects", "listboxfield"],
+    "authors": [{
+            "name": "Will Rossiter",
+            "email": "will@fullscreen.io"
+    }],
+    "require": {
+            "silverstripe/framework": ">=3.1.0"
+    },
+    "extra": {
+      "installer-name": "multiselectfield"
+    },
+    "minimum-stability": "dev"
+}
