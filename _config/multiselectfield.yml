@@ -1,0 +1,9 @@
+---
+name: multiselectfield
+---
+LeftAndMain:
+  extra_requirements_javascript:
+    - framework/thirdparty/jquery-livequery/jquery.livequery.js
+    - multiselectfield/javascript/multiselectfield.js
+  extra_requirements_css:
+    - multiselectfield/css/multiselectfield.css
