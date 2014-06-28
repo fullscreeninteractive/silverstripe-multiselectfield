@@ -1,21 +1,33 @@
 <?php
+
 /**
- * Based on CheckboxSetField with the following changes:
- * - Renders as a standard listbox (select with multiple option)
- * - Transformed with javascript (jQuery) to a pair of listboxes showing selected and unselected options
- * - $source must be an associative array (use toDropdownMap())
- * - $value must be a simple array
  *
- * @author jamie
+ * Example:
+ * <code php>
+ * new MultiSelectField(
+ *    $name = "topics",
+ *    $title = "I am interested in the following topics",
+ *    $source = array(
+ *       "1" => "Technology",
+ *       "2" => "Gardening",
+ *       "3" => "Cooking",
+ *       "4" => "Sports"
+ *    ),
+ *    $value = "1"
+ * )
+ * </code>
+ *
+ * 
+ * @package multiselectfield
  */
 class MultiSelectField extends CheckboxSetField {
 
 	/**
-	 * Generate field HTML
+	 * @param array
 	 *
-	 * @see forms/CheckboxSetField::Field()
+	 * @return HTML
 	 */
-	function Field($properties = array()) {
+	public function Field($properties = array()) {
 		Requirements::javascript(THIRDPARTY_DIR."/jquery/jquery.js");
 		Requirements::javascript(THIRDPARTY_DIR."/jquery-livequery/jquery.livequery.js");
 		Requirements::javascript("multiselectfield/javascript/multiselectfield.js");
@@ -87,6 +99,8 @@ class MultiSelectField extends CheckboxSetField {
 
 	/**
 	 * Get array of selected IDs
+	 *
+	 * @return array
 	 */
 	public function getSelected() {
 		$value = explode(', ', $this->value);
@@ -124,6 +138,8 @@ class MultiSelectField extends CheckboxSetField {
 
 	/**
 	 * Get array of unselected IDs
+	 *
+	 * @return array
 	 */
 	public function getUnselected() {
 		$items = array();
@@ -141,13 +157,13 @@ class MultiSelectField extends CheckboxSetField {
 	/**
 	 * Return list of IDs for read only
 	 *
-	 * @see forms/CheckboxSetField::performReadonlyTransformation()
+	 * @return ReadonlyField
 	 */
 	public function performReadonlyTransformation() {
 		$values = implode(', ',$this->getSelected());
 		$field = new ReadonlyField($this->name, $this->title, $values);
 		$field->setForm($this->form);
+
 		return $field;
 	}
-
 }
