@@ -103,8 +103,12 @@ class MultiSelectField extends CheckboxSetField {
 	 * @return array
 	 */
 	public function getSelected() {
-		$value = explode(', ', $this->value);
-
+		if(!is_array($this->value)) {
+			$value = explode(',',$this->value);
+		}
+		else {
+			$value = $this->value;
+		}
 		// If value not set, try to get it from the form
 		if (!$value && is_object($this->form)) {
 			$record = $this->form->getRecord();
