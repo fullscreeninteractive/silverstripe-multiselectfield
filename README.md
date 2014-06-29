@@ -15,7 +15,7 @@ which has been updated for 3.1.
 
 ## Overview
 
-https://www.evernote.com/shard/s6/sh/ab40de01-9635-448c-93c7-96432e6d2ebb/0e58dd01a55a201fec50919f5f07d632
+![Example](https://www.evernote.com/shard/s6/sh/ab40de01-9635-448c-93c7-96432e6d2ebb/0e58dd01a55a201fec50919f5f07d632/res/731c364e-e6aa-40e0-b50b-0636b3d6f6aa/skitch.png?resizeSmall)
 
 A FormField for users to select and remove multiple items to a record. Similar 
 to CheckboxSetField this handles both adding and removing entries backed by 
