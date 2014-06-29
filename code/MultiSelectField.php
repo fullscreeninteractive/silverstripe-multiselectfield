@@ -84,14 +84,14 @@ class MultiSelectField extends CheckboxSetField {
 	}
 
 	/**
-	 * @return array
+	 * @return string
 	 */
 	public function dataValue() {
 		return (is_array($this->value)) ? implode(', ', $this->value) : $this->value;
 	}
 
 	/**
-	 * @return array
+	 * @return string
 	 */
 	public function Value() {
 		return $this->dataValue();
@@ -103,7 +103,7 @@ class MultiSelectField extends CheckboxSetField {
 	 * @return array
 	 */
 	public function getSelected() {
-		$value = explode(', ', $this->value);
+		$value = explode(', ', $this->getValue());
 
 		// If value not set, try to get it from the form
 		if (!$value && is_object($this->form)) {
