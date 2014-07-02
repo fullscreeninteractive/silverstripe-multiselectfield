@@ -72,29 +72,15 @@ class MultiSelectField extends CheckboxSetField {
 	public function saveInto(DataObjectInterface $record) {
 		$fieldName = $this->getName();
 
-		$valueArray = (isset($this->value[0]) && strpos($this->value[0],',')) ? explode(',',$this->value[0]) : $this->value;
+		$valueArray = (is_array($this->value) && isset($this->value[0]) && strpos($this->value[0],',')) ? explode(',',$this->value[0]) : $this->value;
 
 		if ($fieldName && ($record->has_many($fieldName) || $record->many_many($fieldName))) {
 			// Set related records
 			$record->$fieldName()->setByIDList($valueArray);
 		} else {
-			$record->$fieldName = implode(', ', $valueArray);
+			$record->$fieldName = (is_array($this->value)) ? implode(',', $this->value) : $this->value;
 			$record->write();
 		}
-	}
-
-	/**
-	 * @return string
-	 */
-	public function dataValue() {
-		return (is_array($this->value)) ? implode(', ', $this->value) : $this->value;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function Value() {
-		return $this->dataValue();
 	}
 
 	/**
@@ -103,30 +89,32 @@ class MultiSelectField extends CheckboxSetField {
 	 * @return array
 	 */
 	public function getSelected() {
-		$value = explode(', ', $this->getValue());
+		$value = $this->Value();
+		$record = $this->form->getRecord();
+		$output = array();
 
-		// If value not set, try to get it from the form
-		if (!$value && is_object($this->form)) {
-			$record = $this->form->getRecord();
-
-			if ($record) {
-				if($record->has_many($fieldName) || $record->many_many($fieldName)) {
-					$methodName = $this->name;
-					$join = $record->$methodName();
-					
-					if ($join) {
-						foreach ($join as $joinItem) {
-							$value[] = $joinItem->ID;
-						}
+		if ($record) {
+			if($record->has_many($fieldName) || $record->many_many($fieldName)) {
+				$methodName = $this->name;
+				$join = $record->$methodName();
+				
+				if ($join) {
+					foreach ($join as $joinItem) {
+						$output[] = $joinItem->ID;
 					}
 				}
+
+				return $output;
 			}
 		} else {
 			$output = array();
-
+			$value = (is_array($value)) ? $value : explode(',', $value);
+	
 			foreach($value as $k => $v) {
-				if(isset($this->source[$v])) {
-					$output[$v] = $this->source[$v];
+				foreach($this->source as $sK => $sV) {
+					if($sK == $v) {
+						$output[$sK] = $sV;
+					}
 				}
 			}
 
@@ -160,7 +148,8 @@ class MultiSelectField extends CheckboxSetField {
 	 * @return ReadonlyField
 	 */
 	public function performReadonlyTransformation() {
-		$values = implode(', ',$this->getSelected());
+		$values = implode(',',$this->getSelected());
+		
 		$field = new ReadonlyField($this->name, $this->title, $values);
 		$field->setForm($this->form);
 
