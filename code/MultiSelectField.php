@@ -83,13 +83,17 @@ class MultiSelectField extends CheckboxSetField {
 		}
 	}
 
+	public function dataValue() {
+		return $this->value;
+	}
+
 	/**
 	 * Get array of selected IDs
 	 *
 	 * @return array
 	 */
 	public function getSelected() {
-		$value = $this->Value();
+		$value = $this->dataValue();
 		$record = $this->form->getRecord();
 		$output = array();
 
@@ -109,10 +113,10 @@ class MultiSelectField extends CheckboxSetField {
 		} else {
 			$output = array();
 			$value = (is_array($value)) ? $value : explode(',', $value);
-	
+			
 			foreach($value as $k => $v) {
 				foreach($this->source as $sK => $sV) {
-					if($sK == $v) {
+					if($sK === $k || $sV === $v) {
 						$output[$sK] = $sV;
 					}
 				}
