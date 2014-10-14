@@ -98,6 +98,8 @@ class MultiSelectField extends CheckboxSetField {
 		$output = array();
 
 		if ($record) {
+			$fieldName = $this->getName();
+			
 			if($record->has_many($fieldName) || $record->many_many($fieldName)) {
 				$methodName = $this->name;
 				$join = $record->$methodName();
