@@ -110,7 +110,15 @@ class MultiSelectField extends CheckboxSetField {
 					}
 				}
 
-				return $output;
+				$result = array();	
+				foreach($output as $k => $v) {
+					foreach($this->source as $sK => $sV) {
+						if($sK === $v ) {
+							$result[$sK] = $sV;
+						}
+					}		
+				}
+				return $result;
 			}
 		} else {
 			$output = array();
