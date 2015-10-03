@@ -41,7 +41,7 @@ private static $many_many = array (
 $fields->push(new MultiSelectField(
     "Departments",
     "Departments",
-    Departments::get()->map('ID','Title')
+    Departments::get()->map('ID', 'Title')
 ));
 ```
 
