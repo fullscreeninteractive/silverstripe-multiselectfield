@@ -17,7 +17,7 @@
  * )
  * </code>
  *
- * 
+ *
  * @package multiselectfield
  */
 class MultiSelectField extends CheckboxSetField {
@@ -41,7 +41,7 @@ class MultiSelectField extends CheckboxSetField {
 			'multiple'=>'multiple',
 			'class'=> $this->extraClass() .' no-chzn',
 		);
-		
+
 		if ($this->disabled) {
 			$attributes['disabled'] = 'disabled';
 		}
@@ -99,31 +99,31 @@ class MultiSelectField extends CheckboxSetField {
 
 		if ($record) {
 			$fieldName = $this->getName();
-			
+
 			if($record->has_many($fieldName) || $record->many_many($fieldName)) {
 				$methodName = $this->name;
 				$join = $record->$methodName();
-				
+
 				if ($join) {
 					foreach ($join as $joinItem) {
 						$output[] = $joinItem->ID;
 					}
 				}
 
-				$result = array();	
+				$result = array();
 				foreach($output as $k => $v) {
 					foreach($this->source as $sK => $sV) {
 						if($sK === $v ) {
 							$result[$sK] = $sV;
 						}
-					}		
+					}
 				}
 				return $result;
 			}
 		} else {
 			$output = array();
 			$value = (is_array($value)) ? $value : explode(',', $value);
-			
+
 			foreach($value as $k => $v) {
 				foreach($this->source as $sK => $sV) {
 					if($sK === $k || $sV === $v) {
@@ -163,7 +163,7 @@ class MultiSelectField extends CheckboxSetField {
 	 */
 	public function performReadonlyTransformation() {
 		$values = implode(',',$this->getSelected());
-		
+
 		$field = new ReadonlyField($this->name, $this->title, $values);
 		$field->setForm($this->form);
 
