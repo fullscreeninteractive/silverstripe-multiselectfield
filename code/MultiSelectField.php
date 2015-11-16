@@ -73,7 +73,11 @@ class MultiSelectField extends CheckboxSetField {
 		$fieldName = $this->getName();
 
 		$valueArray = (is_array($this->value) && isset($this->value[0]) && strpos($this->value[0],',')) ? explode(',',$this->value[0]) : $this->value;
-
+		
+		if(empty($valueArray)) {
+			return;
+		}
+		
 		if ($fieldName && ($record->has_many($fieldName) || $record->many_many($fieldName))) {
 			// Set related records
 			$record->$fieldName()->setByIDList($valueArray);
